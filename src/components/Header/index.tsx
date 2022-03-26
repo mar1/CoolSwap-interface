@@ -6,8 +6,8 @@ import { darken } from 'polished';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import Logo from '../../assets/svg/logo.svg';
-import LogoDark from '../../assets/svg/logo_white.svg';
+//import Logo from '../../assets/svg/logo.svg';
+//import LogoDark from '../../assets/svg/logo_white.svg';
 import { useActiveWeb3React } from '../../hooks';
 import { useDarkModeManager } from '../../state/user/hooks';
 import { useETHBalances } from '../../state/wallet/hooks';
@@ -16,6 +16,9 @@ import { LightCard } from '../Card';
 import { Moon, Sun } from 'react-feather';
 import Row, { RowFixed } from '../Row';
 import Web3Status from '../Web3Status';
+
+
+import '../../style.css'
 
 const HeaderFrame = styled.div`
   width: 100vw;
@@ -258,9 +261,6 @@ export default function Header() {
     <HeaderFrame>
       <HeaderRow>
         <Title href=".">
-          <Icon>
-            <img width={'22px'} src={darkMode ? LogoDark : Logo} alt="logo" />
-          </Icon>
         </Title>
       </HeaderRow>
 
@@ -293,7 +293,7 @@ export default function Header() {
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                {userEthBalance?.toSignificant(4)} ETH
+                {userEthBalance?.toSignificant(4)} GLMR
               </BalanceText>
             ) : null}
             <Web3Status />
@@ -305,6 +305,9 @@ export default function Header() {
           </StyledMenuButton>
         </HeaderElementWrap>
       </HeaderControls>
+      <Icon id="logo">
+            <img src="./mainlogo.png" alt="logo" />
+          </Icon>
     </HeaderFrame>
   );
 }

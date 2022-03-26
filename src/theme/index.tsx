@@ -48,7 +48,7 @@ export function colors(darkMode: boolean): Colors {
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
 
     // backgrounds / greys
-    bg1: darkMode ? '#1d1f24' : '#fafafa',
+    bg1: darkMode ? '#1d1f24' : '#1d1f24',
     bg2: darkMode ? '#27292e' : '#ededed',
     bg3: darkMode ? '#3a3d47' : '#e6e6e8',
     bg4: darkMode ? '#4c4f5c' : '#CED0D9',
@@ -182,6 +182,11 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background: rgb(102,153,0) !important;
+  background: -moz-linear-gradient(180deg, rgba(102,153,0,1) 0%, rgba(97,136,19,1) 100%, rgba(73,107,4,1) 100%);
+  background: -webkit-linear-gradient(180deg, rgba(102,153,0,1) 0%, rgba(97,136,19,1) 100%, rgba(73,107,4,1) 100%);
+  background: linear-gradient(180deg, rgba(102,153,0,1) 0%, rgba(97,136,19,1) 100%, rgba(73,107,4,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#669900",endColorstr="#496b04",GradientType=1);
 }
 
 a {
