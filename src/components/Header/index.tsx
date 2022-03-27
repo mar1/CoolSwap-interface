@@ -1,10 +1,10 @@
 import { ChainId } from '@uniswap/sdk';
 import React from 'react';
 import { Text } from 'rebass';
-import { NavLink } from 'react-router-dom';
-import { darken } from 'polished';
+//import { NavLink } from 'react-router-dom';
+//import { darken } from 'polished';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 
 //import Logo from '../../assets/svg/logo.svg';
 //import LogoDark from '../../assets/svg/logo_white.svg';
@@ -169,48 +169,9 @@ const Icon = styled.div`
   }
 `;
 
-const activeClassName = 'ACTIVE';
+//const activeClassName = 'ACTIVE';
 
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})`
-  ${({ theme }) => theme.flexRowNoWrap}
-  align-items: left;
-  border-radius: 12px;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: ${({ theme }) => theme.text2};
-  font-size: 0.9rem;
-  width: fit-content;
-  padding: 0.3rem 0.6rem;
-  font-weight: 500;
-  transition: 0.3s;
 
-  &:not(:last-child) {
-    margin-right: 0.16rem;
-  }
-
-  &.${activeClassName} {
-    color: ${({ theme }) => theme.text1};
-    background-color: ${({ theme }) => theme.bg3};
-  }
-
-  :hover,
-  :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
-  }
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    border-radius: 8px;
-    padding: 0.3rem 7%;
-    border: 1px solid ${({ theme }) => theme.bg3};
-
-    &:not(:last-child) {
-      margin-right: 2%;
-    }
-  `};
-`;
 
 export const StyledMenuButton = styled.button`
   position: relative;
@@ -253,34 +214,19 @@ const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React();
-  const { t } = useTranslation();
+  //const { t } = useTranslation();
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? ''];
   const [darkMode, toggleDarkMode] = useDarkModeManager();
 
   return (
     <HeaderFrame>
       <HeaderRow>
-        <Title href=".">
+        <Title href="https://www.bananaswap.app">
         </Title>
       </HeaderRow>
 
-      <HeaderLinks>
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-          {t('swap')}
-        </StyledNavLink>
-        <StyledNavLink
-          id={`pool-nav-link`}
-          to={'/pool'}
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/add') ||
-            pathname.startsWith('/remove') ||
-            pathname.startsWith('/create') ||
-            pathname.startsWith('/find')
-          }
-        >
-          {t('pool')}
-        </StyledNavLink>
+      <HeaderLinks id="hlinks">
+
       </HeaderLinks>
 
       <HeaderControls>
@@ -306,7 +252,9 @@ export default function Header() {
         </HeaderElementWrap>
       </HeaderControls>
       <Icon id="logo">
+        <a href="https://www.bananaswap.app">
             <img src="./mainlogo.png" alt="logo" />
+            </a>
           </Icon>
     </HeaderFrame>
   );

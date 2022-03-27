@@ -17,6 +17,12 @@ import { useActiveWeb3React } from '../../hooks';
 import { usePairs } from '../../data/Reserves';
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks';
 import { Dots } from '../../components/swap/styleds';
+import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+
+  
+const activeClassName = 'ACTIVE';
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -94,10 +100,81 @@ export default function Pool() {
     v2Pairs?.some((V2Pair) => !V2Pair);
   const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair));
 
+  
+  const StyledNavLink = styled(NavLink).attrs({
+    activeClassName,
+  })`
+    ${({ theme }) => theme.flexRowNoWrap}
+    align-items: left;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: ${({ theme }) => theme.text2};
+    font-size: 0.9rem;
+    width: fit-content;
+    padding: 0.3rem 0.6rem;
+    font-weight: 500;
+    transition: 0.3s;
+  
+    &:not(:last-child) {
+      margin-right: 0.16rem;
+    }
+  
+    &.${activeClassName} {
+      color: ${({ theme }) => theme.text1};
+      background-color: ${({ theme }) => theme.bg3};
+    }
+  
+    :hover,
+    :focus {
+      color: ${({ theme }) => theme.bg3};
+  
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      border-radius: 8px;
+      padding: 0.3rem 7%;
+      border: 1px solid ${({ theme }) => theme.bg3};
+  
+      &:not(:last-child) {
+        margin-right: 2%;
+      }
+    `};
+  `;
+  
+  const Tabs = styled.div`
+  ${({ theme }) => theme.flexRowNoWrap}
+  align-items: center;
+  border-radius: 3rem;
+  justify-content: space-evenly;
+`
+const { t } = useTranslation();
   return (
     <AppBody>
       <PageWrapper>
         <SwapPoolTabs active={'pool'} />
+
+        <Tabs style={{ marginBottom: '20px' }}>
+      <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+          {t('swap')}
+        </StyledNavLink>
+        <StyledNavLink
+          id={`pool-nav-link`}
+          to={'/pool'}
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/add') ||
+            pathname.startsWith('/remove') ||
+            pathname.startsWith('/create') ||
+            pathname.startsWith('/find')
+          }
+        >
+          {t('pool')}
+        </StyledNavLink>
+        <StyledNavLink id={`earn-nav-link`} to={'/earn'}>
+        {t('earn')}
+      </StyledNavLink>
+          </Tabs>
+
         <AutoColumn gap="lg" justify="center">
           <AutoColumn gap="lg" style={{ width: '100%' }}>
             <TitleRow style={{ marginTop: '1rem' }} padding={'0'}>

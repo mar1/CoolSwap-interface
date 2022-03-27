@@ -38,9 +38,14 @@ import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody';
 import { ClickableText } from '../Pool/styleds';
 import Loader from '../../components/Loader';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch();
+  
+const activeClassName = 'ACTIVE';
 
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
@@ -65,6 +70,7 @@ export default function Swap() {
     });
 
   const { account } = useActiveWeb3React();
+  const { t } = useTranslation();
   const theme = useContext(ThemeContext);
 
   // toggle wallet when disconnected
@@ -234,16 +240,93 @@ export default function Swap() {
     [onCurrencySelection]
   );
 
+  const StyledNavLink = styled(NavLink).attrs({
+    activeClassName,
+  })`
+    ${({ theme }) => theme.flexRowNoWrap}
+    align-items: left;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: ${({ theme }) => theme.text2};
+    font-size: 0.9rem;
+    width: fit-content;
+    padding: 0.3rem 0.6rem;
+    font-weight: 500;
+    transition: 0.3s;
+  
+    &:not(:last-child) {
+      margin-right: 0.16rem;
+    }
+  
+    &.${activeClassName} {
+      color: ${({ theme }) => theme.text1};
+      background-color: ${({ theme }) => theme.bg3};
+    }
+  
+    :hover,
+    :focus {
+      color: ${({ theme }) => theme.bg3};
+  
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      border-radius: 8px;
+      padding: 0.3rem 7%;
+      border: 1px solid ${({ theme }) => theme.bg3};
+  
+      &:not(:last-child) {
+        margin-right: 2%;
+      }
+    `};
+  `;
+  
+  const Tabs = styled.div`
+  ${({ theme }) => theme.flexRowNoWrap}
+  align-items: center;
+  border-radius: 3rem;
+  justify-content: space-evenly;
+`
+  //const BANANAS = new Token(ChainId.MOONBEAM, '0xD10078FDbc835726c79533a4a19db40CFAd69d7f', 18, 'GLMB', 'Bananas')
+
+function replace() {
+   // let imgLp =  window.document.querySelector('#swap-currency-output > div > div > button > span')
+
+}
+replace();
+
   return (
     <>
+    
       <TokenWarningModal
         isOpen={importTokensNotInDefault.length > 0 && !dismissTokenWarning}
         tokens={importTokensNotInDefault}
         onConfirm={handleConfirmTokenWarning}
       />
       <SwapPoolTabs active={'swap'} />
+      <Tabs style={{ marginBottom: '20px' }}>
+      <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+          {t('swap')}
+        </StyledNavLink>
+        <StyledNavLink
+          id={`pool-nav-link`}
+          to={'/pool'}
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/add') ||
+            pathname.startsWith('/remove') ||
+            pathname.startsWith('/create') ||
+            pathname.startsWith('/find')
+          }
+        >
+          {t('pool')}
+        </StyledNavLink>
+        <StyledNavLink id={`earn-nav-link`} to={'/earn'}>
+        {t('earn')}
+      </StyledNavLink>
+          </Tabs>
       <AppBody>
         <SwapHeader />
+        
         <Wrapper id="swap-page">
           <ConfirmSwapModal
             isOpen={showConfirm}
