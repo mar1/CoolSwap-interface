@@ -26,7 +26,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ArrowLeft } from 'react-feather';
 import { useTranslation } from 'react-i18next';
-import { lpAddress, lpABI} from './conf.js'
+import { lpAddress, lpABI, farmAddress, farmABI, bananasAddress, bananasABI} from './conf.js'
 
 declare let window: any;
 
@@ -154,14 +154,68 @@ color: ${({ theme }) => theme.text1};
       if (tokd) {
       tokd.innerText = balance
       }
+
+      const farmContract = new ethers.Contract(farmAddress, farmABI, signer);
+      let stakedLp = await farmContract.pending(0, signerAddress)
+      let stakedDiv = window.document.getElementById('ban-staked')
+      let stakedLpAmount = ethers.utils.formatUnits(stakedLp, 18)
+      stakedDiv.innerText = `Claim ${Number(stakedLpAmount).toFixed(4)} 🍌`
+
+      let stakedLp2 = await farmContract.userInfo(0, signerAddress)
+      let stakedDiv2 = window.document.getElementById('unstake')
+      let stakedLpAmount2 = ethers.utils.formatUnits(stakedLp2.amount, 18)
+      console.log(Number(stakedLpAmount2).toFixed(4))
+      if (stakedDiv2) {
+      stakedDiv2.innerText = `Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(4)} 🍌`
+      }
     }fetch();
 
-    function staking() {
-      alert('staking')
+    async function getRewards() {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner()
+      const signerAddress = await signer.getAddress()
+      let stakeContract = new ethers.Contract(farmAddress, farmABI, signer);
+      await stakeContract.getRewards(0)
+
+      alert(`$BANANAS rewards successfully claimed !`)
+
     }
 
-    function unstaking() {
-      alert('unstaking')
+    async function staking() {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner()
+      const signerAddress = await signer.getAddress()
+      const lpContract = new ethers.Contract(lpAddress, lpABI, signer);
+      let balance = await lpContract.balanceOf(signerAddress);
+      //balance = ethers.utils.formatUnits(balance, 18)
+     
+      let approve = await lpContract.approve(farmAddress, balance)
+      alert(`${Number(ethers.utils.formatUnits(balance, 18)).toFixed(4)} approved for staking. Please confirm next transaction`)
+      const tx = await approve.wait()
+      const event = tx.events[0];
+      let stakeContract = new ethers.Contract(farmAddress, farmABI, signer);
+      const action = await stakeContract.deposit(0, balance)
+
+      alert(`${Number(ethers.utils.formatUnits(balance, 18)).toFixed(4)} successfully staked !`)
+
+    }
+
+    async function unstaking() {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner()
+      const signerAddress = await signer.getAddress()
+      const lpContract = new ethers.Contract(lpAddress, lpABI, signer);
+      let balance = await lpContract.balanceOf(signerAddress);
+
+      let stakeContract = new ethers.Contract(farmAddress, farmABI, signer);
+      let stakedLp2 = await stakeContract.userInfo(0, signerAddress)
+      let stakedDiv2 = window.document.getElementById('unstake')
+     // let stakedLpAmount2 = ethers.utils.formatUnits(stakedLp2.amount, 18)
+      await stakeContract.withdraw(0, stakedLp2.amount)
+      alert('Withdraw transaction sent')
     }
 
     const { t } = useTranslation();
@@ -244,13 +298,16 @@ color: ${({ theme }) => theme.text1};
 
 
 
-<Text fontWeight={500} fontSize={20}>
-        <Text id="ban-staked"></Text> 
-      </Text>
+
 
       <ButtonSecondary id="unstake" onClick={unstaking}>
-<Text fontWeight={500} fontSize={20}>
-  Unstake your LP tokens <br></br> Claim 🍌
+
+</ButtonSecondary>
+
+
+      <ButtonSecondary id="unstake" onClick={getRewards}>
+<Text id="ban-staked" fontWeight={500} fontSize={20}>
+
 </Text>
 </ButtonSecondary>
     </AppBody>
