@@ -253,7 +253,7 @@ export default function Header() {
       </HeaderControls>
       <Icon id="logo">
         <a href="https://www.bananaswap.app">
-            <img src="./mainlogo.png" alt="logo" />
+            <img src="./mainlogo.png" alt="logo" id="imglogo" />
             </a>
           </Icon>
     </HeaderFrame>

@@ -220,6 +220,7 @@ color: ${({ theme }) => theme.text1};
 
     const { t } = useTranslation();
   return (
+    <>
     <AppBody>
       <EarnTabs active={'earn'}  />
       <Tabs style={{ marginBottom: '20px' }}>
@@ -311,5 +312,7 @@ color: ${({ theme }) => theme.text1};
 </Text>
 </ButtonSecondary>
     </AppBody>
+    <p id="footer">💘 GLMR APES DAO 🍌</p>
+  </>
   );
           }

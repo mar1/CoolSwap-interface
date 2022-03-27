@@ -149,6 +149,7 @@ export default function Pool() {
 `
 const { t } = useTranslation();
   return (
+    <>
     <AppBody>
       <PageWrapper>
         <SwapPoolTabs active={'pool'} />
@@ -224,5 +225,7 @@ const { t } = useTranslation();
         </AutoColumn>
       </PageWrapper>
     </AppBody>
+      <p id="footer">💘 GLMR APES DAO 🍌</p>
+    </>
   );
 }

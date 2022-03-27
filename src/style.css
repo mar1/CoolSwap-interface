@@ -140,6 +140,10 @@ body{
         padding-bottom: 0;
         margin-bottom: 0;
     }
+
+    #imglogo {
+        max-width: 300px;
+    }
   }
 
 #swap-currency-input2 {
@@ -149,4 +153,11 @@ body{
 .ACTIVE {
     color: #FFA400 !important;
     font-weight: bolder !important;
+}
+
+#footer {
+    color: #FFA400 !important;
+    font-size: 110%;  
+    font-weight: bold;
+    text-shadow: 0 0 80px rgb(192 219 255 / 75%), 0 0 32px rgb(65 120 255 / 24%);
 }

@@ -525,6 +525,7 @@ replace();
 
         {trade && <AdvancedSwapDetailsDropdown trade={trade} />}
       </AppBody>
+        <p id="footer">💘 GLMR APES DAO 🍌</p>
     </>
   );
 }
