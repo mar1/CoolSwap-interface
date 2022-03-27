@@ -16,9 +16,13 @@ import { LightCard } from '../Card';
 import { Moon, Sun } from 'react-feather';
 import Row, { RowFixed } from '../Row';
 import Web3Status from '../Web3Status';
+import { ethers } from 'ethers'
+import { bananasAddress, bananasABI} from './conf.js'
 
 
 import '../../style.css'
+
+declare let window: any;
 
 const HeaderFrame = styled.div`
   width: 100vw;
@@ -218,6 +222,22 @@ export default function Header() {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? ''];
   const [darkMode, toggleDarkMode] = useDarkModeManager();
 
+  //const [isDark] = useDarkModeManager()
+  async function fetchGLMB() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner()
+    const signerAddress = await signer.getAddress()
+    const bananasContract = new ethers.Contract(bananasAddress, bananasABI, provider);
+    let tokens = await bananasContract.balanceOf(signerAddress)
+    tokens = ethers.utils.formatUnits(tokens, 18)
+    tokens = Number(tokens)
+    let bansDiv = await window.document.getElementById("fetchGLMB")
+   if (bansDiv) {
+    bansDiv.innerText = `${tokens.toFixed(0)} 🍌`
+   }
+  }fetchGLMB();
+
   return (
     <HeaderFrame>
       <HeaderRow>
@@ -236,12 +256,20 @@ export default function Header() {
               <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
             )}
           </HideSmall>
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
+          <AccountElement id="accountel" active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
                 {userEthBalance?.toSignificant(4)} GLMR
               </BalanceText>
             ) : null}
+
+            {account && userEthBalance ? (
+              <BalanceText id="fetchGLMB" style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
+              
+              </BalanceText>
+            ) : null}
+
+
             <Web3Status />
           </AccountElement>
         </HeaderElement>

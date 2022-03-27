@@ -155,6 +155,13 @@ color: ${({ theme }) => theme.text1};
       tokd.innerText = balance
       }
 
+      if (balance == 0) {
+        let divBtn = window.document.getElementById('stake')
+        divBtn.style.display = "none";
+        let divBtn2 = window.document.getElementById('warning')
+        divBtn2.style.display = "none";
+      }
+
       const farmContract = new ethers.Contract(farmAddress, farmABI, signer);
       let stakedLp = await farmContract.pending(0, signerAddress)
       let stakedDiv = window.document.getElementById('ban-staked')
@@ -166,7 +173,7 @@ color: ${({ theme }) => theme.text1};
       let stakedLpAmount2 = ethers.utils.formatUnits(stakedLp2.amount, 18)
       console.log(Number(stakedLpAmount2).toFixed(4))
       if (stakedDiv2) {
-      stakedDiv2.innerText = `Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(4)} 🍌`
+      stakedDiv2.innerText = `Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(2)} 🍌`
       }
     }fetch();
 
@@ -273,11 +280,6 @@ color: ${({ theme }) => theme.text1};
           )}
         </ButtonDropdownLight>
 
-        <ColumnCenter>
-        <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              2 Transactions to validate
-            </Text>
-        </ColumnCenter>
 
 
 </AutoColumn>
@@ -293,6 +295,14 @@ color: ${({ theme }) => theme.text1};
   Stake your LP tokens
 </Text>
 </ButtonPrimary>
+
+
+<ColumnCenter>
+        <Text fontWeight={500} fontSize={20} id="warning" marginTop={'1rem'}>
+              2 Transactions to validate
+            </Text>
+        </ColumnCenter>
+
       <Text fontWeight={500} fontSize={20}>
         <Text id="rewards-to-claim"></Text> 
       </Text>
@@ -312,7 +322,7 @@ color: ${({ theme }) => theme.text1};
 </Text>
 </ButtonSecondary>
     </AppBody>
-    <p id="footer">💘 GLMR APES DAO 🍌</p>
+    <a href="https://www.glmrapes.com" target="_blank" id="footer">💘 GLMR APES DAO 🍌</a>
   </>
   );
           }

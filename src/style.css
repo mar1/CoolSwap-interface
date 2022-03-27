@@ -16,6 +16,18 @@ body{
     background: transparent;
 }
 
+#accountel {
+    background: #006633 !important;
+    color: white !important;
+}
+
+
+#web3-status-connected {
+    background: #FFA400 !important;
+    color: white !important;
+    border: none !important;
+}
+
 #coinlogo {
     margin-right: auto;
     margin-left: auto;
@@ -160,4 +172,14 @@ body{
     font-size: 110%;  
     font-weight: bold;
     text-shadow: 0 0 80px rgb(192 219 255 / 75%), 0 0 32px rgb(65 120 255 / 24%);
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+#footer:hover {
+    color: white !important;
+}
+
+#warning {
+    color: #FFA400 !important; 
 }
