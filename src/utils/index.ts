@@ -35,17 +35,17 @@ export function getEtherscanLink(
 
   switch (type) {
     case 'transaction': {
-      return `${prefix}/tx/${data}`;
+      return `https://blockscout.moonbeam.network/tx/${data}`;
     }
     case 'token': {
-      return `${prefix}/token/${data}`;
+      return `https://blockscout.moonbeam.network/token/${data}`;
     }
     case 'block': {
-      return `${prefix}/block/${data}`;
+      return `https://blockscout.moonbeam.network/block/${data}`;
     }
     case 'address':
     default: {
-      return `${prefix}/address/${data}`;
+      return `https://blockscout.moonbeam.network/address/${data}`;
     }
   }
 }

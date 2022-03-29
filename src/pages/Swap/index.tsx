@@ -1,4 +1,4 @@
-import { CurrencyAmount, JSBI, Token, Trade } from '@uniswap/sdk';
+import { CurrencyAmount, JSBI, Token, Trade, ChainId } from '@uniswap/sdk';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { ArrowDown } from 'react-feather';
 import { Text } from 'rebass';
@@ -41,12 +41,12 @@ import Loader from '../../components/Loader';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+declare let window: any;
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch();
-  
 const activeClassName = 'ACTIVE';
-
+let GLMB = new Token(ChainId.MOONBEAM, '0xD10078FDbc835726c79533a4a19db40CFAd69d7f', 18, 'GLMB', 'Bananas')
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
     useCurrency(loadedUrlParams?.inputCurrencyId),
@@ -287,13 +287,26 @@ const activeClassName = 'ACTIVE';
   justify-content: space-evenly;
 `
   //const BANANAS = new Token(ChainId.MOONBEAM, '0xD10078FDbc835726c79533a4a19db40CFAd69d7f', 18, 'GLMB', 'Bananas')
+/*
+  async function replace() {
 
-function replace() {
-   // let imgLp =  window.document.querySelector('#swap-currency-output > div > div > button > span')
+    let symbolCheck = await document.querySelector('#swap-currency-output > div > div > button > span > span')
+    if (symbolCheck) {
 
-}
-replace();
+    if (symbolCheck.innerText && symbolCheck.innerText == 'GLMB') {
 
+        let imgLp =  window.document.querySelector('#swap-currency-output > div > div > button')
+          if (imgLp) {
+          imgLp.innerHTML = `<img src="https://bananaswap.vercel.app/bananascoin.png" width='34px;'></img>`
+          }
+
+
+    }
+  }
+  }
+    replace();
+    */
+    
   return (
     <>
     
@@ -350,6 +363,7 @@ replace();
               currency={currencies[Field.INPUT]}
               onUserInput={handleTypeInput}
               onMax={handleMaxInput}
+
               onCurrencySelect={handleInputSelect}
               otherCurrency={currencies[Field.OUTPUT]}
               id="swap-currency-input"

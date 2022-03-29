@@ -12,6 +12,21 @@ body{
     max-width: 100vw;
 }
 
+#charts {
+   background-color: transparent !important;
+   border: none;
+   box-shadow: none;
+   font-size: 20pt;
+}
+
+#chartslink {
+    text-decoration: none;
+}
+
+#charts:hover {
+    transform: scale(1.3);
+}
+
 #hlinks {
     background: transparent;
 }
@@ -56,8 +71,16 @@ body{
 }
 
 #pool-nav-link {
-    background: transparent;
+    background-color: transparent !important;
     font-size: 110%;
+}
+
+#navbarel {
+    background: transparent !important;
+}
+
+#moonbeam {
+    background: transparent !important;
 }
 
 #earn-nav-link {

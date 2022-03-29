@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { TransactionResponse } from '@ethersproject/providers';
-import { Currency, ETHER, TokenAmount } from '@uniswap/sdk';
+import { Currency, ETHER, TokenAmount, Token, ChainId } from '@uniswap/sdk';
 import React, { useCallback, useContext, useState } from 'react';
 import { Plus } from 'react-feather';
 import { RouteComponentProps } from 'react-router-dom';
@@ -45,7 +45,7 @@ export default function AddLiquidity({
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
   const { account, chainId, library } = useActiveWeb3React();
   const theme = useContext(ThemeContext);
-
+  let GLMB = new Token(ChainId.MOONBEAM, '0xD10078FDbc835726c79533a4a19db40CFAd69d7f', 18, 'GLMB', 'Bananas')
   const currencyA = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
 
@@ -365,7 +365,7 @@ export default function AddLiquidity({
                 onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '');
               }}
               showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
-              currency={currencies[Field.CURRENCY_B]}
+              currency={GLMB}
               id="add-liquidity-input-tokenb"
               showCommonBases
             />

@@ -251,9 +251,12 @@ export default function Header() {
 
       <HeaderControls>
         <HeaderElement>
-          <HideSmall>
+        <HideSmall>
+        <NetworkCard id="charts"><a id="chartslink" href="https://dexscreener.com/moonbeam/0x4f3d0bdca59c31126e4d69a4ed4fe67cbee97e6a" target="_blank">📊</a></NetworkCard> 
+          </HideSmall>
+          <HideSmall id="navbarel">
             {chainId && NETWORK_LABELS[chainId] && (
-              <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
+              <NetworkCard id="networkchain" title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
             )}
           </HideSmall>
           <AccountElement id="accountel" active={!!account} style={{ pointerEvents: 'auto' }}>
@@ -273,11 +276,7 @@ export default function Header() {
             <Web3Status />
           </AccountElement>
         </HeaderElement>
-        <HeaderElementWrap>
-          <StyledMenuButton onClick={toggleDarkMode}>
-            {darkMode ? <Moon size={20} /> : <Sun size={20} />}
-          </StyledMenuButton>
-        </HeaderElementWrap>
+
       </HeaderControls>
       <Icon id="logo">
         <a href="https://www.bananaswap.app">
