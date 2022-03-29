@@ -365,7 +365,7 @@ export default function AddLiquidity({
                 onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '');
               }}
               showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
-              currency={GLMB}
+              currency={currencies[Field.CURRENCY_B]}
               id="add-liquidity-input-tokenb"
               showCommonBases
             />
