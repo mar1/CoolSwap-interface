@@ -256,7 +256,11 @@ color: ${({ theme }) => theme.text1};
         <BlueCard>
           <AutoColumn gap="10px">
             <TYPE.link fontWeight={400} color={'primaryText1'}>
-            <Text textAlign="center" id="text">Stake your LP tokens to get extra $BANANAS rewards !</Text>
+            <Text textAlign="center" id="text">Stake your LP tokens to get extra $BANANAS rewards !<br></br>
+
+If you don't see your liquidities here, you need to unstake them from the old pool.<br></br>
+  
+<a href="https://bananaswap.app/#/oldpool" id="important">Unstake your inactive LP here</a></Text>
             </TYPE.link>
           </AutoColumn>
         </BlueCard>
@@ -325,7 +329,7 @@ color: ${({ theme }) => theme.text1};
 <Text id="notice" fontWeight={500} fontSize={20}>
 If you don't see your liquidities here, you need to unstake them from the old pool.<br></br>
 <u>You will need to do it only once.</u><br></br> You'll get extra 🍌 on this Pool to compensate<br></br>
-<a href="https://bananaswap.app/#/oldpool" id="important">Unstake your LP here</a>
+<a href="https://bananaswap.app/#/oldpool" id="important">Unstake your inactive LP here</a>
 </Text>
 
 

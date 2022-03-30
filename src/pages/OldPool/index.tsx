@@ -172,7 +172,7 @@ color: ${({ theme }) => theme.text1};
       let stakedLpAmount2 = ethers.utils.formatUnits(stakedLp2.amount, 18)
       console.log(Number(stakedLpAmount2).toFixed(4))
       if (stakedDiv2) {
-      stakedDiv2.innerHTML = `✅ Leave the pool<br>Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(2)} 🍌`
+      stakedDiv2.innerHTML = `✅ Leave this inactive pool<br>Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(2)} 🍌`
       }
     }fetch();
 
@@ -183,30 +183,10 @@ color: ${({ theme }) => theme.text1};
       const signerAddress = await signer.getAddress()
       let stakeContract = new ethers.Contract(farmAddress, farmABI, signer);
       await stakeContract.getRewards(0)
-
       alert(`$BANANAS rewards successfully claimed !`)
 
     }
 
-    async function staking() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner()
-      const signerAddress = await signer.getAddress()
-      const lpContract = new ethers.Contract(lpAddress, lpABI, signer);
-      let balance = await lpContract.balanceOf(signerAddress);
-      //balance = ethers.utils.formatUnits(balance, 18)
-     
-      let approve = await lpContract.approve(farmAddress, balance)
-      alert(`${Number(ethers.utils.formatUnits(balance, 18)).toFixed(4)} approved for staking. Please confirm next transaction`)
-      const tx = await approve.wait()
-      const event = tx.events[0];
-      let stakeContract = new ethers.Contract(farmAddress, farmABI, signer);
-      const action = await stakeContract.deposit(0, balance)
-
-      alert(`${Number(ethers.utils.formatUnits(balance, 18)).toFixed(4)} successfully staked !`)
-
-    }
 
     async function unstaking() {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -220,8 +200,13 @@ color: ${({ theme }) => theme.text1};
       let stakedLp2 = await stakeContract.userInfo(0, signerAddress)
       let stakedDiv2 = window.document.getElementById('unstake')
      // let stakedLpAmount2 = ethers.utils.formatUnits(stakedLp2.amount, 18)
-      await stakeContract.withdraw(0, stakedLp2.amount)
-      alert('Withdraw transaction sent')
+     let action = await stakeContract.withdraw(0, stakedLp2.amount)
+      alert('Unstaking transaction sent')
+      const tx2 = await action.wait()
+      const dimt2 = tx2.events[0];
+      console.log(dimt2, tx2, action)
+      alert(`Unstaking successful. You can now restake your LP tokens`)
+      window.location.replace("https://bananaswap.app/#/earn");
     }
 
     const { t } = useTranslation();
@@ -290,25 +275,6 @@ color: ${({ theme }) => theme.text1};
         showCommonBases
         selectedCurrency={LP}
       />
-      <ButtonPrimary id="stake" onClick={staking}>
-<Text fontWeight={500} fontSize={20}>
-  Stake your LP tokens
-</Text>
-</ButtonPrimary>
-
-
-<ColumnCenter>
-        <Text fontWeight={500} fontSize={20} id="warning" marginTop={'1rem'}>
-              2 Transactions to validate
-            </Text>
-        </ColumnCenter>
-
-      <Text fontWeight={500} fontSize={20}>
-        <Text id="rewards-to-claim"></Text> 
-      </Text>
-
-
-
 
 
       <ButtonSecondary id="unstake" onClick={unstaking}>
