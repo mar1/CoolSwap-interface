@@ -35,7 +35,7 @@ enum Fields {
   TOKEN1 = 1,
 }
 
-export default function Earn() {
+export default function OldPool() {
   const { account } = useActiveWeb3React();
   let LP = new Token(ChainId.MOONBEAM, '0x4f3D0bDcA59c31126E4D69A4Ed4Fe67CbEe97e6a', 18, 'BAN', 'Bananaswap')
 
@@ -166,14 +166,13 @@ color: ${({ theme }) => theme.text1};
       let stakedLp = await farmContract.pending(0, signerAddress)
       let stakedDiv = window.document.getElementById('ban-staked')
       let stakedLpAmount = ethers.utils.formatUnits(stakedLp, 18)
-      stakedDiv.innerText = `Claim ${Number(stakedLpAmount).toFixed(4)} 🍌`
 
       let stakedLp2 = await farmContract.userInfo(0, signerAddress)
       let stakedDiv2 = window.document.getElementById('unstake')
       let stakedLpAmount2 = ethers.utils.formatUnits(stakedLp2.amount, 18)
       console.log(Number(stakedLpAmount2).toFixed(4))
       if (stakedDiv2) {
-      stakedDiv2.innerText = `Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(2)} 🍌`
+      stakedDiv2.innerHTML = `✅ Leave the pool<br>Unstake ${Number(stakedLpAmount2).toFixed(2)} LP & Claim ${Number(stakedLpAmount).toFixed(2)} 🍌`
       }
     }fetch();
 
@@ -256,7 +255,8 @@ color: ${({ theme }) => theme.text1};
         <BlueCard>
           <AutoColumn gap="10px">
             <TYPE.link fontWeight={400} color={'primaryText1'}>
-            <Text textAlign="center" id="text">Stake your LP tokens to get extra $BANANAS rewards !</Text>
+            <Text textAlign="center" id="text">Unstake from this inactive pool and go to "Earn" to get Active Rewards<br></br>
+            💘 & 🍌</Text>
             </TYPE.link>
           </AutoColumn>
         </BlueCard>
@@ -316,19 +316,11 @@ color: ${({ theme }) => theme.text1};
 </ButtonSecondary>
 
 
-      <ButtonSecondary id="unstake" onClick={getRewards}>
+      <ButtonSecondary id="unstake3" onClick={getRewards}>
 <Text id="ban-staked" fontWeight={500} fontSize={20}>
 
 </Text>
 </ButtonSecondary>
-
-<Text id="notice" fontWeight={500} fontSize={20}>
-If you don't see your liquidities here, you need to unstake them from the old pool.<br></br>
-<u>You will need to do it only once.</u><br></br> You'll get extra 🍌 on this Pool to compensate<br></br>
-<a href="https://bananaswap.app/#/oldpool" id="important">Unstake your LP here</a>
-</Text>
-
-
     </AppBody>
     <a href="https://www.glmrapes.com" target="_blank" id="footer">💘 GLMR APES DAO 🍌</a>
   </>

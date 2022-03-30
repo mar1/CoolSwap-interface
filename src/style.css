@@ -36,11 +36,19 @@ body{
     color: white !important;
 }
 
+#unstake3 {
+    display: none !important;
+}
 
 #web3-status-connected {
     background: #FFA400 !important;
     color: white !important;
     border: none !important;
+}
+
+#important {
+    color: #FFA400 !important;
+    font-weight: bold;
 }
 
 #coinlogo {
@@ -61,7 +69,30 @@ body{
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 2rem;
+    border: 2px solid #006633!important;
+}
+
+#unstakenewpool {
+    max-width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 2rem;
     border: 2px solid #006633 !important;
+}
+
+#claim {
+    max-width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 2rem;
+    border: 2px solid #006633 !important; 
+}
+
+#notice {
+    text-align: center;
+    margin: 0 1rem;
+    padding-bottom: 2rem;
+    line-height: 150%;
 }
 
 #stake {
