@@ -166,7 +166,7 @@ color: ${({ theme }) => theme.text1};
       let stakedLp = await farmContract.pending(0, signerAddress)
       let stakedDiv = window.document.getElementById('ban-staked')
       let stakedLpAmount = ethers.utils.formatUnits(stakedLp, 18)
-      stakedDiv.innerText = `Claim ${Number(stakedLpAmount).toFixed(4)} 🍌`
+      //stakedDiv.innerText = `Claim ${Number(stakedLpAmount).toFixed(4)} 🍌`
 
       let stakedLp2 = await farmContract.userInfo(0, signerAddress)
       let stakedDiv2 = window.document.getElementById('unstake')
@@ -315,12 +315,8 @@ If you don't see your liquidities here, you need to unstake them from the old po
 
 
 
+
       <ButtonSecondary id="unstake" onClick={unstaking}>
-
-</ButtonSecondary>
-
-
-      <ButtonSecondary id="unstake" onClick={getRewards}>
 <Text id="ban-staked" fontWeight={500} fontSize={20}>
 
 </Text>
